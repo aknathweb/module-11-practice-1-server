@@ -7,10 +7,46 @@ const port = process.env.PORT || 5000
 app.use(cors());
 
 
+const users = [
+    {
+        id: 01, name: 'anik', email: 'anik@gamil.com'
+    },
+    {
+        id: 02, name: 'kanak', email: 'kanak@gamil.com'
+    },
+    {
+        id: 03, name: 'shefali', email: 'shefali@gamil.com'
+    }
+]
 app.get('/', (req, res) => {
     res.send('server site running successfully')
 })
 
 app.listen(port, () => {
     console.log(`Check listening on port ${port}`)
+})
+app.get('/users', (req, res) => {
+    if (req.query.name) {
+        // filter users by query [name]
+        const search = req.query.name;
+        const filtered = users.filter(user => user.name.toLowerCase().includes(search));
+        // send data after query filter
+        res.send(filtered);
+    }
+    else
+        res.send(users);
+    console.log(req.query);
+})
+
+app.use(express.json());
+app.post('/users', (req, res) => {
+    console.log('Post Api called');
+    // check post send body information
+    console.log(req.body);
+    // new user from post send data
+    const user = req.body;
+    user.id = users.length + 1;
+    users.push(user);
+    // res.send to response send as output
+    res.send(user);
 })
