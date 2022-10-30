@@ -52,3 +52,14 @@ Server side:
 req.query.name
 req.query.email
 */
+
+/* 
+Mongodb:
+----------------------------
+1. sign up mongodb atlas
+2. dba user
+3. Whitelist your ip address
+4. database> connect> show entire code
+5. npm i mongodb
+
+*/

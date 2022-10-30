@@ -18,6 +18,10 @@ const users = [
         id: 03, name: 'shefali', email: 'shefali@gamil.com'
     }
 ]
+
+
+
+
 app.get('/', (req, res) => {
     res.send('server site running successfully')
 })
@@ -50,3 +54,22 @@ app.post('/users', (req, res) => {
     // res.send to response send as output
     res.send(user);
 })
+
+
+//////////////////////mongodb////////////////////
+
+/* 
+username: admin
+password: xxppepLSmwrMGUaa
+
+*/
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://admin:xxppepLSmwrMGUaa@cluster0.7wt8nwb.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+    const collection = client.db("DatabaseName").collection("CollectionDataName");
+    // perform actions on the collection object
+    client.close();
+    console.log('database connected');
+});
+////////////////////////mongodb/////////////////////////
