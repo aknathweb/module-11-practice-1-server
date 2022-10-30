@@ -43,7 +43,7 @@ app.get('/users', (req, res) => {
 })
 
 app.use(express.json());
-app.post('/users', (req, res) => {
+/* app.post('/users', (req, res) => {
     console.log('Post Api called');
     // check post send body information
     console.log(req.body);
@@ -53,7 +53,7 @@ app.post('/users', (req, res) => {
     users.push(user);
     // res.send to response send as output
     res.send(user);
-})
+}) */
 
 
 //////////////////////mongodb////////////////////
@@ -66,10 +66,34 @@ password: xxppepLSmwrMGUaa
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://admin:xxppepLSmwrMGUaa@cluster0.7wt8nwb.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
+/* client.connect(err => {
     const collection = client.db("DatabaseName").collection("CollectionDataName");
     // perform actions on the collection object
     client.close();
     console.log('database connected');
-});
+}); */
+
+async function run() {
+    try {
+        const userCollection = client.db('Simpledb').collection('users');
+        const user = { name: 'kumar nath', email: 'kumar@gmail.com' };
+        // const result = await userCollection.insertOne(user);
+        // console.log(result);
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            // user.id = users.length + 1;
+            // users.push(user);
+            const result = await userCollection.insertOne(user);
+            console.log(result);
+            user.id = result.insertedId;
+            res.send(user);
+        })
+
+    }
+    finally {
+
+    }
+}
+
+run().catch(error => console.log(e));
 ////////////////////////mongodb/////////////////////////
