@@ -29,20 +29,22 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Check listening on port ${port}`)
 })
-app.get('/users', (req, res) => {
-    if (req.query.name) {
-        // filter users by query [name]
-        const search = req.query.name;
-        const filtered = users.filter(user => user.name.toLowerCase().includes(search));
-        // send data after query filter
-        res.send(filtered);
-    }
-    else
-        res.send(users);
-    console.log(req.query);
-})
+
+// app.get('/users', (req, res) => {
+//     if (req.query.name) {
+//         // filter users by query [name]
+//         const search = req.query.name;
+//         const filtered = users.filter(user => user.name.toLowerCase().includes(search));
+//         // send data after query filter
+//         res.send(filtered);
+//     }
+//     else
+//         res.send(users);
+//     console.log(req.query);
+// })
 
 app.use(express.json());
+
 /* app.post('/users', (req, res) => {
     console.log('Post Api called');
     // check post send body information
@@ -79,6 +81,14 @@ async function run() {
         const user = { name: 'kumar nath', email: 'kumar@gmail.com' };
         // const result = await userCollection.insertOne(user);
         // console.log(result);
+
+        app.get('/users', async (req, res) => {
+            const cursor = userCollection.find({});
+            const users = await cursor.toArray();
+            res.send(users);
+        })
+
+
         app.post('/users', async (req, res) => {
             const user = req.body;
             // user.id = users.length + 1;
